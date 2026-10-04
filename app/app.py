@@ -1,29 +1,28 @@
 import reflex as rx
 
+from app.components.header import header
+from app.components.home_sections import books, hero, services
+from app.components.learning_sections import articles, education, reviews
+from app.components.footer import footer
+from app.states.navigation_state import NavigationState
+
 
 def index() -> rx.Component:
-    return rx.el.main(
-        rx.el.div(
-            rx.el.h1(
-                "Environment is ready...",
-                class_name="text-3xl font-semibold text-gray-800 mb-4",
-            ),
-            rx.el.p(
-                "Keep prompting to build your app!",
-                class_name="text-gray-600 mb-12",
-            ),
-            rx.el.a(
-                rx.el.button(
-                    "View Documentation",
-                    rx.icon("arrow-right", class_name="ml-2", size=16),
-                    class_name="bg-violet-500 text-white px-6 py-3 rounded-lg hover:bg-violet-600 transition-colors flex items-center font-medium",
-                ),
-                href="https://reflex.dev/docs/ai-builder/overview/best-practices/",
-                target="_blank",
-            ),
-            class_name="flex flex-col items-center justify-center text-center min-h-screen",
+    return rx.el.div(
+        header(),
+        rx.el.main(
+            hero(),
+            services(),
+            books(),
+            reviews(),
+            education(),
+            articles(),
+            class_name="w-full min-w-0 bg-white text-[#102d4b]",
         ),
-        class_name="font-['Inter'] bg-white",
+        footer(),
+        dir="rtl",
+        lang="fa",
+        class_name="min-h-dvh w-full bg-white font-['Vazirmatn'] text-[#102d4b] antialiased",
     )
 
 
@@ -37,9 +36,15 @@ app = rx.App(
             cross_origin="",
         ),
         rx.el.link(
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap",
+            href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap",
             rel="stylesheet",
         ),
     ],
 )
-app.add_page(index, route="/")
+app.add_page(
+    index,
+    route="/",
+    title="لیلا شقاقی | فرزانگان هوشمند",
+    description="معرفی لیلا شقاقی، خدمات روانشناسی فرزانگان هوشمند و کتاب‌های روانشناسی و توسعه فردی.",
+    on_load=NavigationState.close_menu,
+)
